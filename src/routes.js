@@ -103,21 +103,10 @@ function updateTask(req, res) {
     return handleError(res, 422, 'Properties name and description are missing. At least one of these properties is required.')
   }
 
-  if (!req.body.name) {
-    return handleError(res, 422, 'Property name is required.')
-  }
-
-  if (!req.body.description) {
-    return handleError(res, 422, 'Property description is required.')
-  }
-
   const { id } = req.params
-  const { name, description } = req.body
+  const body = { ...req.body }
 
-  const data = database.update('tasks', id, {
-    name,
-    description
-  })
+  const data = database.update('tasks', id, body)
 
   return handleSuccess(res, data)
 }
